@@ -1,18 +1,19 @@
 """
-gacaa
+gacca
 """
 from character_creation import Character, get_pronoun_list
 
 
 def pull_information(pulls: list):
     pull_info = ""
+    counter = 1
 
     for pull in pulls:
-        pull_info += (f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-                      f"YOU PULLED A {pull.rarity} UNIT!!!\n"
+        pull_info += (f"<===PULL {counter}===>\n"
+                      f"YOU PULLED A {pull.rarity} STAR UNIT!!!\n"
                       f"NAME: {pull.name}\n"
-                      f"BIO: {pull.bio}\n"
-                      f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n")
+                      f"BIO: {pull.bio}\n\n")
+        counter += 1
 
     return pull_info
 
