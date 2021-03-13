@@ -4,6 +4,10 @@ map
 from random import randint, randrange
 
 
+def CANNOT_MOVE_HIT_WALL() -> str:
+    return "Your face impacts with the cold dungeon walls."
+
+
 def generate_map_locations(x_size: int, y_size: int, player_coords: list) -> dict:
     staircase_coords = [randrange(0, x_size), randrange(0, y_size)]
     while staircase_coords == player_coords:
@@ -40,6 +44,21 @@ def get_map_information(locations: dict, x_size: int, y_size: int, player_locati
         information += f"{get_location_type(locations, x_size - 1, y, player_location)}]\n"
 
     return information
+
+
+def move_player(locations: dict, x_size: int, y_size: int, player_location: list, direction: str) -> str:
+    movements = {"up": [0, -1], "down": [0, 1], "left": [-1, 0], "right": [1, 0]}
+    predicted_coords = player_location[:]
+    predicted_coords[0] += movements[direction][0]
+    predicted_coords[1] += movements[direction][1]
+
+    if predicted_coords[0] < 0 or predicted_coords[0] >= x_size:
+        return CANNOT_MOVE_HIT_WALL()
+    if predicted_coords[1] < 0 or predicted_coords[1] >= y_size:
+        return CANNOT_MOVE_HIT_WALL()
+
+    player_location[0] = predicted_coords[0]
+    player_location[1] = predicted_coords[1]
 
 
 def main():
