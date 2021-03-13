@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+import character_creation
+from discord.ext.commands import CommandNotFound
 
 load_dotenv()
 
@@ -22,16 +24,28 @@ async def on_ready():
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
 
 
-@bot.command(name='hello', help=': tell the user to fuck off')
-async def test(ctx, arg):
-    if arg == "hello":
-        await ctx.send("hey fuck you")
+@bot.command(name='hello')
+async def test(ctx):
+    em = discord.Embed(title="Hello", description="Please fuck off")
+    await ctx.send(embed=em)
 
 
-@bot.command(name='slap', help=': slap a user by typing $slap @USERNAME REASON-FOR-SLAP')
+@bot.command(name='slap')
 async def slap(ctx, members: commands.Greedy[discord.Member], *, reason='no reason'):
     slapped = "and ".join(x.name for x in members)
     await ctx.send('I just slapped {} for {}'.format(slapped, reason))
+
+
+@bot.command(name='createCharacter')
+async def create(ctx):
+    # if user.character == already exists:
+    #      tell user that they already have a main character
+    # else: do the stuff below
+    new_character = character_creation.main()
+    em = discord.Embed(title="\U00002694 Create Character \U00002694",
+                       description=f"User {ctx.message.author.mention} created a new character")
+    em.add_field(name="Character Bio", value=f"{new_character}")
+    await ctx.send(embed=em)
 
 
 @bot.group(invoke_without_command=True)
@@ -80,6 +94,13 @@ async def sell(ctx):
                        color=ctx.author.color)
     em.add_field(name="**Syntax**", value="$sell [item name]")
     await ctx.send(embed=em)
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        em = discord.Embed(title="\U00002620 Bad Command \U00002620", description="That's not a valid command, idiot.")
+        await ctx.send(embed=em)
 
 
 bot.run(DISCORD_TOKEN)
