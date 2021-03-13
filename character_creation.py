@@ -71,7 +71,7 @@ class Character:
 
 def main():
     new_character = Character()
-    print(new_character.bio)
+    return new_character.bio
 
 
 if __name__ == "__main__":

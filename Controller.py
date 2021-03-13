@@ -2,9 +2,8 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-
-# THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
-startup_extensions = ["story"]
+import character_creation
+from discord.ext.commands import CommandNotFound
 
 load_dotenv()
 
@@ -25,34 +24,28 @@ async def on_ready():
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
 
 
-@bot.command()
-async def load(ctx, extension_name : str):
-    """Loads an extension."""
-    try:
-        bot.load_extension(extension_name)
-    except (AttributeError, ImportError) as e:
-        await ctx.send("```py\n{}: {}\n```".format(type(e).__name__, str(e)))
-        return
-    await ctx.send("{} loaded.".format(extension_name))
+@bot.command(name='hello')
+async def test(ctx):
+    em = discord.Embed(title="Hello", description="Please fuck off")
+    await ctx.send(embed=em)
 
 
-@bot.command()
-async def unload(ctx, extension_name : str):
-    """Unloads an extension."""
-    bot.unload_extension(extension_name)
-    await ctx.send("{} unloaded.".format(extension_name))
-
-
-@bot.command(name='hello', help=': tell the user to fuck off')
-async def test(ctx, arg):
-    if arg == "hello":
-        await ctx.send("hey fuck you")
-
-
-@bot.command(name='slap', help=': slap a user by typing $slap @USERNAME REASON-FOR-SLAP')
+@bot.command(name='slap')
 async def slap(ctx, members: commands.Greedy[discord.Member], *, reason='no reason'):
     slapped = "and ".join(x.name for x in members)
     await ctx.send('I just slapped {} for {}'.format(slapped, reason))
+
+
+@bot.command(name='createCharacter')
+async def create(ctx):
+    # if user.character == already exists:
+    #      tell user that they already have a main character
+    # else: do the stuff below
+    new_character = character_creation.main()
+    em = discord.Embed(title="\U00002694 Create Character \U00002694",
+                       description=f"User {ctx.message.author.mention} created a new character")
+    em.add_field(name="Character Bio", value=f"{new_character}")
+    await ctx.send(embed=em)
 
 
 @bot.group(invoke_without_command=True)
@@ -103,14 +96,11 @@ async def sell(ctx):
     await ctx.send(embed=em)
 
 
-if __name__ == "__main__":
-    for extension in startup_extensions:
-        try:
-            bot.load_extension(extension)
-        except Exception as e:
-            exc = '{}: {}'.format(type(e).__name__, e)
-            print('Failed to load extension {}\n{}'.format(extension, exc))
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        em = discord.Embed(title="\U00002620 Bad Command \U00002620", description="That's not a valid command, idiot.")
+        await ctx.send(embed=em)
 
-    client = discord.Client()
 
-    bot.run(DISCORD_TOKEN)
+bot.run(DISCORD_TOKEN)
