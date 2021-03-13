@@ -3,8 +3,8 @@ from random import choice
 
 RARITIES = [
     {"Rarity": "Normal", "stat_multiplier": 1.0},
-    {"Rarity": "Rare", "stat_multiplier": 1.2},
-    {"Rarity": "Super Rare", "stat_multiplier": 1.7}
+    {"Rarity": "Rare", "stat_multiplier": 1.3},
+    {"Rarity": "Super Rare", "stat_multiplier": 1.6}
 ]
 
 # Hero Classes
@@ -51,11 +51,11 @@ class Warrior(Player):
     def __init__(self):
         self.rarity = choice(RARITIES)
         super().__init__(hp=int(randint(13, 16) * self.rarity["stat_multiplier"]),
-                         mp=int(randint(5, 7) * self.rarity["stat_multiplier"]),
+                         mp=int(randint(7, 8) * self.rarity["stat_multiplier"]),
                          attack=int(randint(7, 10) * self.rarity["stat_multiplier"]),
-                         magic_attack=int(randint(3, 5) * self.rarity["stat_multiplier"]),
+                         magic_attack=int(randint(5, 7) * self.rarity["stat_multiplier"]),
                          defence=int(randint(6, 8) * self.rarity["stat_multiplier"]),
-                         resistance=int(randint(4, 6) * self.rarity["stat_multiplier"]),
+                         resistance=int(randint(5, 7) * self.rarity["stat_multiplier"]),
                          description="A sword and shield is all you need. You're like a berserker class but "
                                      "more generic.",
                          exp=0
@@ -80,7 +80,6 @@ class Mage(Player):
 
     def get_rarity(self):
         print(f"{self.rarity['Rarity']}\n")
-
 
 
 class Thief(Player):
@@ -138,12 +137,12 @@ class Priest(Player):
 class DarkKnight(Player):
     def __init__(self):
         self.rarity = choice(RARITIES)
-        super().__init__(hp=int(randint(10, 14) * self.rarity["stat_multiplier"]),
+        super().__init__(hp=int(randint(10, 13) * self.rarity["stat_multiplier"]),
                          mp=int(randint(9, 10) * self.rarity["stat_multiplier"]),
-                         attack=int(randint(10, 14) * self.rarity["stat_multiplier"]),
+                         attack=int(randint(9, 13) * self.rarity["stat_multiplier"]),
                          magic_attack=int(randint(6, 8) * self.rarity["stat_multiplier"]),
                          defence=int(randint(5, 7) * self.rarity["stat_multiplier"]),
-                         resistance=int(randint(7, 9) * self.rarity["stat_multiplier"]),
+                         resistance=int(randint(7, 7) * self.rarity["stat_multiplier"]),
                          description="UNLIMITED HEALING.",
                          exp=0
                          )
@@ -151,27 +150,3 @@ class DarkKnight(Player):
     def get_rarity(self):
         print(f"{self.rarity['Rarity']}\n")
 
-
-test = Warrior()
-test.get_stats()
-test.get_total()
-
-test2 = Mage()
-test2.get_stats()
-test2.get_total()
-
-test3 = Thief()
-test3.get_stats()
-test3.get_total()
-
-test4 = Priest()
-test4.get_stats()
-test4.get_total()
-
-test5 = DarkKnight()
-test5.get_stats()
-test5.get_total()
-
-test6 = Brawler()
-test6.get_stats()
-test6.get_total()
