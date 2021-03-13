@@ -3,6 +3,9 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 
+# THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
+startup_extensions = ["story"]
+
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
@@ -20,6 +23,24 @@ async def on_ready():
         print(f"- {guild.id} (name: {guild.name})")
         guild_count += 1
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
+
+
+@bot.command()
+async def load(ctx, extension_name : str):
+    """Loads an extension."""
+    try:
+        bot.load_extension(extension_name)
+    except (AttributeError, ImportError) as e:
+        await ctx.send("```py\n{}: {}\n```".format(type(e).__name__, str(e)))
+        return
+    await ctx.send("{} loaded.".format(extension_name))
+
+
+@bot.command()
+async def unload(ctx, extension_name : str):
+    """Unloads an extension."""
+    bot.unload_extension(extension_name)
+    await ctx.send("{} unloaded.".format(extension_name))
 
 
 @bot.command(name='hello', help=': tell the user to fuck off')
@@ -82,4 +103,14 @@ async def sell(ctx):
     await ctx.send(embed=em)
 
 
-bot.run(DISCORD_TOKEN)
+if __name__ == "__main__":
+    for extension in startup_extensions:
+        try:
+            bot.load_extension(extension)
+        except Exception as e:
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load extension {}\n{}'.format(extension, exc))
+
+    client = discord.Client()
+
+    bot.run(DISCORD_TOKEN)
