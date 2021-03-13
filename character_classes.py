@@ -11,25 +11,16 @@ RARITIES = [
 
 
 class Character:
-    def __init__(self, hp, mp, attack, magic_attack, defence, resistance):
+    def __init__(self, hp, mp, attack, magic_attack, defence, resistance, description):
         self.hp = hp
         self.mp = mp
         self.attack = attack
         self.magic_attack = magic_attack
         self.defence = defence
         self.resistance = resistance
-
-
-class Player(Character):
-    def __init__(self, hp, mp, attack, magic_attack, defence, resistance, exp, description):
-        super().__init__(hp, mp, attack, magic_attack, defence, resistance)
-        self.exp = exp
         self.description = description
 
-    def get_exp(self):
-        print(f"EXP: {self.exp}/100 \n")
-
-    def get_stats(self):
+    def get_monster_stats(self):
         print(f"Class: {self.__class__.__name__}\n"
               f"HP: {self.hp} \n"
               f"MP: {self.mp} \n"
@@ -37,14 +28,30 @@ class Player(Character):
               f"Magic Attack: {self.magic_attack} \n"
               f"Defence: {self.defence} \n"
               f"Resistance: {self.resistance} \n"
+              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
+              f"Description: {self.description} \n")
+
+
+class Player(Character):
+    def __init__(self, hp, mp, attack, magic_attack, defence, resistance, exp, description):
+        super().__init__(hp, mp, attack, magic_attack, defence, resistance, description)
+        self.exp = exp
+
+    def get_class_stats(self):
+        print(f"Class: {self.__class__.__name__}\n"
+              f"HP: {self.hp} \n"
+              f"MP: {self.mp} \n"
+              f"Attack: {self.attack} \n"
+              f"Magic Attack: {self.magic_attack} \n"
+              f"Defence: {self.defence} \n"
+              f"Resistance: {self.resistance} \n"
+              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
               f"Rarity: {self.rarity['Rarity']} \n"
+              f"EXP: {self.exp}/100 \n"
               f"Description: {self.description} \n")
 
     def get_multi(self):
         print(f"Multiplier: {self.rarity['stat_multiplier']}")
-
-    def get_total(self):
-        print(f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}")
 
 
 class Warrior(Player):
@@ -149,4 +156,48 @@ class DarkKnight(Player):
 
     def get_rarity(self):
         print(f"{self.rarity['Rarity']}\n")
+
+
+class Goblin(Character):
+    def __init__(self):
+        super().__init__(hp=randint(6, 8),
+                         mp=randint(6, 8),
+                         attack=randint(7, 9),
+                         magic_attack=randint(5, 7),
+                         defence=randint(4, 5),
+                         resistance=randint(4, 5),
+                         description="If Shrek fused with Lord Farquaad.")
+
+
+class Zombie(Character):
+    def __init__(self):
+        super().__init__(hp=randint(8, 10),
+                         mp=randint(6, 8),
+                         attack=randint(3, 5),
+                         magic_attack=randint(3, 4),
+                         defence=randint(4, 5),
+                         resistance=randint(4, 5),
+                         description="Smells. Real. Bad")
+
+
+class Werewolf(Character):
+    def __init__(self):
+        super().__init__(hp=randint(8, 10),
+                         mp=randint(6, 8),
+                         attack=randint(3, 5),
+                         magic_attack=randint(3, 4),
+                         defence=randint(4, 5),
+                         resistance=randint(4, 5),
+                         description=":dog: Woof woof. ;)")
+
+
+class Vampire(Character):
+    def __init__(self):
+        super().__init__(hp=randint(7, 9),
+                         mp=randint(6, 8),
+                         attack=randint(6, 7),
+                         magic_attack=randint(3, 4),
+                         defence=randint(5, 7),
+                         resistance=randint(2, 3),
+                         description="He wants to Succ Blood.")
 
