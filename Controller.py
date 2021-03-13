@@ -1,5 +1,9 @@
 # IMPORT DISCORD.PY. ALLOWS ACCESS TO DISCORD'S API.
+import random
+import typing
+
 import discord
+from discord.ext import commands
 
 # IMPORT THE OS MODULE.
 import os
@@ -13,8 +17,8 @@ load_dotenv()
 # GRAB THE API TOKEN FROM THE .ENV FILE.
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
 
-# GETS THE CLIENT OBJECT FROM DISCORD.PY. CLIENT IS SYNONYMOUS WITH BOT.
-bot = discord.Client()
+# ADDS SPECIFIC COMMAND TO INITIALIZE BOT ACTIONS
+bot = commands.Bot(command_prefix='$')
 
 
 # EVENT LISTENER FOR WHEN THE BOT HAS SWITCHED FROM OFFLINE TO ONLINE.
@@ -35,13 +39,18 @@ async def on_ready():
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
 
 
-# EVENT LISTENER FOR WHEN A NEW MESSAGE IS SENT TO A CHANNEL.
-@bot.event
-async def on_message(message):
-    if message.content == "what the fuck":
-        await message.channel.send("fuck off")
-    if message.content == "hello":
-        await message.channel.send("hey there")
+@bot.command()
+async def test(ctx, arg):
+    if arg == "hello":
+        await ctx.send("hey fuck you")
 
+
+@bot.command()
+async def slap(ctx, members: commands.Greedy[discord.Member], *, reason='no reason'):
+    slapped = "and ".join(x.name for x in members)
+    await ctx.send('I just slapped {} for {}'.format(slapped, reason))
+
+
+client = discord.Client()
 
 bot.run(DISCORD_TOKEN)
