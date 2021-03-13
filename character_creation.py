@@ -51,30 +51,27 @@ def create_randomized_bio(name: str, gender: int) -> str:
     personality = get_personality_type()
     land = get_land(get_pronoun_list(gender))
 
-    bio = f"{name} is a {personality} {get_gender_type(gender)} from a land {land}."
+    bio = f"{name} is a {personality} {get_gender_type(gender)},\nfrom a land {land}."
     return bio
 
 
 class Character:
     def __init__(self):
-        self.__gender = randint(1, 3)
+        self.gender = randint(1, 3)
 
         name_choices = {1: get_male_name, 2: get_female_name, 3: choice([get_male_name, get_female_name])}
-        self.__name = name_choices[self.__gender]()
+        self.name = name_choices[self.gender]()
 
-        self.__rarity = randint(1, 3)
+        self.rarity = randint(1, 3)
 
-        self.__bio = create_randomized_bio(self.__name, self.__gender)
+        self.bio = create_randomized_bio(self.name, self.gender)
 
-        self.__class = 0  # use the classes thing when it's ready
-
-    def get_bio(self):
-        return self.__bio
+        self.class_type = 0  # use the classes thing when it's ready
 
 
 def main():
     new_character = Character()
-    print(new_character.get_bio())
+    print(new_character.bio)
 
 
 if __name__ == "__main__":
