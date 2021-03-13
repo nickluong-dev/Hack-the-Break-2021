@@ -1,11 +1,12 @@
 """
-gaca
+character
 """
 from random import randint, choice
 
 
-def GENDER_TYPES() -> dict:
-    return {1: "man", 2: "woman", 3: "traveler"}
+def get_gender_type(gender: int) -> str:
+    genders = {1: "man", 2: "woman", 3: "traveler"}
+    return genders[gender]
 
 
 def get_pronoun_list(gender: int) -> list:
@@ -50,26 +51,30 @@ def create_randomized_bio(name: str, gender: int) -> str:
     personality = get_personality_type()
     land = get_land(get_pronoun_list(gender))
 
-    bio = f"{name} is a {personality} {GENDER_TYPES()[gender]} from a land {land}."
+    bio = f"{name} is a {personality} {get_gender_type(gender)} from a land {land}."
     return bio
 
 
 class Character:
     def __init__(self):
         self.__gender = randint(1, 3)
+
         name_choices = {1: get_male_name, 2: get_female_name, 3: choice([get_male_name, get_female_name])}
         self.__name = name_choices[self.__gender]()
-        self.__rarity = randint(1, 5)
+
+        self.__rarity = randint(1, 3)
+
         self.__bio = create_randomized_bio(self.__name, self.__gender)
+
         self.__class = 0  # use the classes thing when it's ready
 
-    def print_bio(self):
-        print(self.__bio)
+    def get_bio(self):
+        return self.__bio
 
 
 def main():
     new_character = Character()
-    new_character.print_bio()
+    print(new_character.get_bio())
 
 
 if __name__ == "__main__":
