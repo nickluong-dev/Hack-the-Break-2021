@@ -60,10 +60,19 @@ def move_player(locations: dict, x_size: int, y_size: int, player_location: list
     player_location[0] = predicted_coords[0]
     player_location[1] = predicted_coords[1]
 
+    # gonna need to check for combat once combat is implemented here
+
+    return f"You move {direction}."
+
 
 def main():
-    locations = generate_map_locations(5, 5, [3, 2])
-    print(get_map_information(locations, 5, 5, [3, 2]))
+    player_location = [3, 2]
+    locations = generate_map_locations(5, 5, player_location)
+    print(get_map_information(locations, 5, 5, player_location))
+    print(move_player(locations, 5, 5, player_location, "up"))
+    print(move_player(locations, 5, 5, player_location, "up"))
+    print(move_player(locations, 5, 5, player_location, "up"))
+    print(get_map_information(locations, 5, 5, player_location))
 
 
 if __name__ == "__main__":
