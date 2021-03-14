@@ -3,7 +3,10 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import character_creation
-from discord.ext.commands import CommandNotFound
+from discord.ext.commands import CommandNotFound , Bot
+from discord.ext.commands import Bot
+
+import character_classes
 
 # THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
 startup_extensions = ["story"]
@@ -25,10 +28,11 @@ async def on_ready():
         print(f"- {guild.id} (name: {guild.name})")
         guild_count += 1
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
+    await bot.change_presence(activity=discord.Game('Fortnite'))
 
 
 @bot.command()
-async def load(ctx, extension_name : str):
+async def load(ctx, extension_name: str):
     """Loads an extension."""
     try:
         bot.load_extension(extension_name)
@@ -39,7 +43,7 @@ async def load(ctx, extension_name : str):
 
 
 @bot.command()
-async def unload(ctx, extension_name : str):
+async def unload(ctx, extension_name: str):
     """Unloads an extension."""
     bot.unload_extension(extension_name)
     await ctx.send("{} unloaded.".format(extension_name))
@@ -68,6 +72,16 @@ async def create(ctx):
     em.add_field(name="Character Bio", value=f"{new_character}")
     await ctx.send(embed=em)
 
+
+@bot.command(name='selectClass')
+async def select_class(ctx, chosen_class='none'):
+    altered_chosen = chosen_class.title()
+    spec_list = ['Warrior', 'Mage', 'Thief', 'Priest']
+    if altered_chosen in spec_list:
+        # new_spec = character_classes.Player.
+        await ctx.send(f"good class: {altered_chosen} with specs: ")
+    else:
+        await ctx.send(f"class does not exist: {chosen_class}")
 
 @bot.group(invoke_without_command=True)
 async def help(ctx):
