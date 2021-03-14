@@ -65,15 +65,16 @@ async def slap(ctx, members: commands.Greedy[discord.Member], *, reason='no reas
 
 @bot.command(name='createCharacter')
 async def create(ctx):
-    # if user.character == already exists:
-    #      tell user that they already have a main character
-    # else: do the stuff below
-    new_character = character_creation.main()
-    user_controller.available_user_characters.append(new_character)
-    em = discord.Embed(title="\U00002694 Create Character \U00002694",
-                       description=f"User {ctx.message.author.mention} created a new character")
-    em.add_field(name="Character Bio", value=f"{new_character}")
-    await ctx.send(embed=em)
+    if len(user_controller.available_user_characters) > 0:
+        zem = discord.Embed(title="ERROR", description="You're already creating a character, finish up first!")
+        await ctx.send(embed=zem)
+    else:
+        new_character = character_creation.main()
+        user_controller.available_user_characters.append(new_character)
+        em = discord.Embed(title="\U00002694 Create Character \U00002694",
+                           description=f"User {ctx.message.author.mention} created a new character")
+        em.add_field(name="Character Bio", value=f"{new_character}")
+        await ctx.send(embed=em)
 
 
 @bot.command(name='selectClass')
@@ -81,11 +82,14 @@ async def select_class(ctx, chosen_class='none'):
     altered_chosen = chosen_class.title()
     print(altered_chosen)
     spec_list = ['Warrior', 'Mage', 'Brawler', 'Priest', 'DarkKnight', 'Thief']
+    if len(user_controller.available_user_characters) == 0:
+        lem = discord.Embed(title="No character being crated", description="You're not currently creating a character!")
+        await ctx.send(embed=lem)
     if len(user_controller.available_user_characters) > 3:
         rem = discord.Embed(title="Error")
         rem.add_field(name="Already have a character!", value="cant create right now")
         await ctx.send(embed=rem)
-    elif altered_chosen in spec_list:
+    elif len(user_controller.available_user_characters) != 0 and altered_chosen in spec_list:
         for i in range(0, len(spec_list)):
             if spec_list[i] == altered_chosen:
                 user_controller.available_user_characters.append(user_controller.AVAILABLE_CLASSES[i]())
@@ -96,9 +100,20 @@ async def select_class(ctx, chosen_class='none'):
                 f"Name: {user_controller.available_user_characters[0]}\n\n"
                 f"Backstory: {user_controller.available_user_characters[1]}\n\n")
                 em.add_field(name="\U0001F528 Profession Details", value=f"{word}")
+                print(len(user_controller.available_user_characters))
                 await ctx.send(embed=em)
+
+
+@bot.command(name='finalize')
+async def finalize_character(ctx):
+    if len(user_controller.available_user_characters) == 4:
+        wem = discord.Embed(title="Your character is created!", description="Have a nice adventure! \U0001F604")
+        (user_controller.available_user_characters).clear()
+        print(len(user_controller.available_user_characters))
+        await ctx.send(embed=wem)
     else:
-        await ctx.send(f"class does not exist: {chosen_class}")
+        bem = discord.Embed(title="There's nothing to finalize!", description="You're not creating a character!")
+        await ctx.send(embed=bem)
 
 
 @bot.group(invoke_without_command=True)
