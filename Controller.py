@@ -149,6 +149,7 @@ async def on_message(ctx):
             score = score + 1
             collection.update_one({"_id": ctx.author.id}, {"$set": {"score": score}})
             await ctx.channel.send('accepted!')
+    await bot.process_commands(ctx)
 
 
 if __name__ == "__main__":
