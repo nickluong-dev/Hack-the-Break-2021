@@ -1,7 +1,7 @@
 """
 gacca
 """
-from character_creation import Character, get_pronoun_list
+from character_creation import CharacterInfo, get_pronoun_list
 
 
 def pull_information(pulls: list):
@@ -21,7 +21,7 @@ def pull_information(pulls: list):
 def pull_characters(number_of_pulls: int) -> list:
     pulls = []
     for pull in range(0, number_of_pulls):
-        pulls += [Character()]
+        pulls += [CharacterInfo()]
 
     return pulls
 

@@ -1,5 +1,5 @@
 """
-character
+character stuff
 """
 from random import randint, choice
 
@@ -56,7 +56,7 @@ def create_randomized_bio(name: str, gender: int) -> str:
     return bio
 
 
-class Character:
+class CharacterInfo:
     def __init__(self):
         self.gender = randint(1, 3)
 
@@ -71,7 +71,7 @@ class Character:
 
 
 def main():
-    new_character = Character()
+    new_character = CharacterInfo()
     return new_character.bio
 
 
