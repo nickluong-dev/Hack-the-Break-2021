@@ -7,6 +7,7 @@ RARITIES = [
     {"Rarity": "Super Rare", "stat_multiplier": 1.6}
 ]
 
+
 # Hero Classes
 
 
@@ -21,15 +22,15 @@ class Character:
         self.description = description
 
     def get_monster_stats(self):
-        print(f"Class: {self.__class__.__name__}\n"
-              f"HP: {self.hp} \n"
-              f"MP: {self.mp} \n"
-              f"Attack: {self.attack} \n"
-              f"Magic Attack: {self.magic_attack} \n"
-              f"Defence: {self.defence} \n"
-              f"Resistance: {self.resistance} \n"
-              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
-              f"Description: {self.description} \n")
+        return (f"Class: {self.__class__.__name__}\n"
+                f"HP: {self.hp} \n"
+                f"MP: {self.mp} \n"
+                f"Attack: {self.attack} \n"
+                f"Magic Attack: {self.magic_attack} \n"
+                f"Defence: {self.defence} \n"
+                f"Resistance: {self.resistance} \n"
+                f"Total: {self.hp + self.mp + self.attack + self.magic_attack + self.defence + self.resistance}\n"
+                f"Description: {self.description} \n")
 
 
 class Player(Character):
@@ -38,20 +39,20 @@ class Player(Character):
         self.exp = exp
 
     def get_class_stats(self):
-        print(f"Class: {self.__class__.__name__}\n"
-              f"HP: {self.hp} \n"
-              f"MP: {self.mp} \n"
-              f"Attack: {self.attack} \n"
-              f"Magic Attack: {self.magic_attack} \n"
-              f"Defence: {self.defence} \n"
-              f"Resistance: {self.resistance} \n"
-              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
-              f"Rarity: {self.rarity['Rarity']} \n"
-              f"EXP: {self.exp}/100 \n"
-              f"Description: {self.description} \n")
+        return (f"Class: {self.__class__.__name__}\n"
+                f"HP: {self.hp} \n"
+                f"MP: {self.mp} \n"
+                f"Attack: {self.attack} \n"
+                f"Magic Attack: {self.magic_attack} \n"
+                f"Defence: {self.defence} \n"
+                f"Resistance: {self.resistance} \n"
+                f"Total: {self.hp + self.mp + self.attack + self.magic_attack + self.defence + self.resistance}\n"
+                f"Rarity: {self.rarity['Rarity']} \n"
+                f"EXP: {self.exp}/100 \n"
+                f"Description: {self.description} \n")
 
     def get_multi(self):
-        print(f"Multiplier: {self.rarity['stat_multiplier']}")
+        return f"Multiplier: {self.rarity['stat_multiplier']}"
 
 
 class Warrior(Player):
@@ -69,7 +70,7 @@ class Warrior(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return f"{self.rarity['Rarity']}\n"
 
 
 class Mage(Player):
@@ -86,7 +87,7 @@ class Mage(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return (f"{self.rarity['Rarity']}\n")
 
 
 class Thief(Player):
@@ -104,7 +105,7 @@ class Thief(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return (f"{self.rarity['Rarity']}\n")
 
 
 class Brawler(Player):
@@ -121,7 +122,7 @@ class Brawler(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return (f"{self.rarity['Rarity']}\n")
 
 
 class Priest(Player):
@@ -138,7 +139,7 @@ class Priest(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return f"{self.rarity['Rarity']}\n"
 
 
 class DarkKnight(Player):
@@ -155,7 +156,7 @@ class DarkKnight(Player):
                          )
 
     def get_rarity(self):
-        print(f"{self.rarity['Rarity']}\n")
+        return f"{self.rarity['Rarity']}\n"
 
 
 class Goblin(Character):
@@ -200,4 +201,3 @@ class Vampire(Character):
                          defence=randint(5, 7),
                          resistance=randint(2, 3),
                          description="He wants to Succ Blood.")
-

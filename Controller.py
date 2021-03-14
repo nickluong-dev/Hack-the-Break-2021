@@ -9,7 +9,7 @@ import character_creation
 from discord.ext.commands import CommandNotFound
 
 # THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
-startup_extensions = ["story"]
+startup_extensions = ["story", "user_controller"]
 
 load_dotenv()
 
@@ -51,12 +51,6 @@ async def unload(ctx, extension_name: str):
     """Unloads an extension."""
     bot.unload_extension(extension_name)
     await ctx.send("{} unloaded.".format(extension_name))
-
-
-@bot.command(name='hello')
-async def test(ctx):
-    em = discord.Embed(title="Hello", description="Please fuck off")
-    await ctx.send(embed=em)
 
 
 @bot.command(name='slap')
