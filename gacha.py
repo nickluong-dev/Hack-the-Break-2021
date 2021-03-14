@@ -10,10 +10,10 @@ def pull_information(pulls: list):
 
     for pull in pulls:
         pull_info += (f"<===PULL {counter}===>\n"
-                      f"YOU PULLED A {pull.class_type.rarity['Rarity'].upper()} UNIT!!!\n"
+                      f"YOU PULLED A {pull.stats.rarity['Rarity'].upper()} UNIT!!!\n"
                       f"NAME: {pull.name}\n"
                       f"BIO: {pull.bio}\n"
-                      f"CLASS: {pull.class_type.__class__.__name__}\n\n")
+                      f"CLASS: {pull.stats.__class__.__name__}\n\n")
         counter += 1
 
     return pull_info

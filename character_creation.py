@@ -65,7 +65,9 @@ def get_extended_bio(pronoun: list, name: str) -> str:
                f"{name} didn't mean mean to end up here, but that's quite alright to {pronoun[1]}.",
                f"'Here for a good time, not a long time' is {pronoun[2]} motto. "
                f"{pronoun[2].title()} friends think {pronoun[0]} should get a better motto.",
-               f"'Get in the robot, {name}.' {name} still thinks about that day, and shutters."]
+               f"'Get in the robot, {name}.' {name} still thinks about that day, and shutters.",
+               f"Yelling loudly is {pronoun[2]} greatest talent. 'It ain't easy,' {name} is quick to insist.",
+               f"{name} "]
     return choice(ext_bio)
 
 
@@ -90,7 +92,7 @@ class CharacterInfo:
 
         character_classes = [Warrior, Mage, Thief, Brawler, Priest, DarkKnight]
 
-        self.class_type = choice(character_classes)()
+        self.stats = choice(character_classes)()
 
 
 def main():
