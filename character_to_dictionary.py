@@ -1,4 +1,5 @@
 from character_creation import CharacterInfo, get_pronoun_list
+from character_classes import *
 
 
 def convert_character_to_dictionary(character):
@@ -19,3 +20,27 @@ def convert_character_to_dictionary(character):
                  'stats': class_dict}
 
     return char_dict
+
+
+def convert_dictionary_to_character(dictionary):
+    make_classes = {"Warrior": Warrior, "Mage": Mage, "Thief": Thief, "Brawler": Brawler,
+                    "Priest": Priest, "DarkKnight": DarkKnight}
+    char_class = make_classes[dictionary['stats']['class']]()
+
+    char_class.hp = dictionary['stats']['hp']
+    char_class.mp = dictionary['stats']['mp']
+    char_class.attack = dictionary['stats']['attack']
+    char_class.magic_attack = dictionary['stats']['magic_attack']
+    char_class.defence = dictionary['stats']['defence']
+    char_class.resistance = dictionary['stats']['resistance']
+    char_class.description = dictionary['stats']['description']
+    char_class.rarity = dictionary['stats']['rarity']
+    char_class.exp = dictionary['stats']['exp']
+
+    character = CharacterInfo()
+    character.gender = dictionary['gender']
+    character.name = dictionary['name']
+    character.bio = dictionary['bio']
+    character.stats = char_class
+
+    return character
