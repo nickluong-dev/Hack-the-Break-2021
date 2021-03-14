@@ -1,11 +1,11 @@
 import discord
-from discord.ext import commands
 import os
-from dotenv import load_dotenv
 import pymongo
-from pymongo import MongoClient
-
+import user_controller
 import character_creation
+from discord.ext import commands
+from dotenv import load_dotenv
+from pymongo import MongoClient
 from discord.ext.commands import CommandNotFound
 
 # THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
@@ -124,6 +124,8 @@ async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         em = discord.Embed(title="\U00002620 Bad Command \U00002620", description="That's not a valid command, idiot.")
         await ctx.send(embed=em)
+
+
 
 
 @bot.event
