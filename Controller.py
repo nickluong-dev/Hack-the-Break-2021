@@ -9,6 +9,7 @@ from pymongo import MongoClient
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+CONNECTION_URL = os.getenv('CONNECTION_URL')
 
 bot = commands.Bot(command_prefix='$')
 
@@ -85,4 +86,11 @@ async def sell(ctx):
     await ctx.send(embed=em)
 
 
+cluster = MongoClient(CONNECTION_URL)
+db = cluster["UserData"]
+collection = db["UserData"]
+
+
+if "python" in str(ctx.content.lower()):
+    post = {"_id": ctx.author.id, }
 bot.run(DISCORD_TOKEN)
