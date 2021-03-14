@@ -6,7 +6,7 @@ import pymongo
 from pymongo import MongoClient
 
 import character_creation
-from discord.ext.commands import CommandNotFound , Bot
+from discord.ext.commands import CommandNotFound
 from discord.ext.commands import Bot
 
 import character_classes
@@ -36,7 +36,6 @@ async def on_ready():
         print(f"- {guild.id} (name: {guild.name})")
         guild_count += 1
     print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
-    await bot.change_presence(activity=discord.Game('Fortnite'))
 
 
 @bot.command()
@@ -90,6 +89,7 @@ async def select_class(ctx, chosen_class='none'):
         await ctx.send(f"good class: {altered_chosen} with specs: ")
     else:
         await ctx.send(f"class does not exist: {chosen_class}")
+
 
 @bot.group(invoke_without_command=True)
 async def help(ctx):
@@ -163,6 +163,7 @@ async def on_message(ctx):
             score = score + 1
             collection.update_one({"_id": ctx.author.id}, {"$set": {"score": score}})
             await ctx.channel.send('accepted!')
+    await bot.process_commands(ctx)
 
 
 if __name__ == "__main__":

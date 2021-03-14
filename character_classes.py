@@ -7,7 +7,16 @@ RARITIES = [
     {"Rarity": "Super Rare", "stat_multiplier": 1.6}
 ]
 
+
 # Hero Classes
+# write it to a json file, then load from json
+# data struct contains list of items, char name, exp
+# as need basis, only when the player clicks save
+#       other option: ongoing way --> observer pattern
+
+# whenever we want to save a value has been changed in the character structure
+# can have an attribute in the character class : self.callback
+# everytime a function needs to update the save state it would just update the callback function
 
 
 class Character:
@@ -28,7 +37,7 @@ class Character:
               f"Magic Attack: {self.magic_attack} \n"
               f"Defence: {self.defence} \n"
               f"Resistance: {self.resistance} \n"
-              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
+              f"Total: {self.hp + self.mp + self.attack + self.magic_attack + self.defence + self.resistance}\n"
               f"Description: {self.description} \n")
 
 
@@ -45,7 +54,7 @@ class Player(Character):
               f"Magic Attack: {self.magic_attack} \n"
               f"Defence: {self.defence} \n"
               f"Resistance: {self.resistance} \n"
-              f"Total: {self.hp+self.mp+self.attack+self.magic_attack+self.defence+self.resistance}\n"
+              f"Total: {self.hp + self.mp + self.attack + self.magic_attack + self.defence + self.resistance}\n"
               f"Rarity: {self.rarity['Rarity']} \n"
               f"EXP: {self.exp}/100 \n"
               f"Description: {self.description} \n")
@@ -200,4 +209,3 @@ class Vampire(Character):
                          defence=randint(5, 7),
                          resistance=randint(2, 3),
                          description="He wants to Succ Blood.")
-
