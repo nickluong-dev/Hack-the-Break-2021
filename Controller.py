@@ -9,7 +9,7 @@ import character_creation
 from discord.ext.commands import CommandNotFound
 
 # THE LIST OF EXTENSIONS THAT ARE LOADED WHEN THE BOT STARTS UP
-startup_extensions = ["story", "user_controller"]
+startup_extensions = ["story", "user_controller", "battle"]
 
 load_dotenv()
 
