@@ -11,7 +11,7 @@ def get_gender_type(gender: int) -> str:
 
 
 def get_pronoun_list(gender: int) -> list:
-    pronouns = {1: ["he", "him", "his"], 2: ["she", "her", "hers"], 3: ["they", "them", "theirs"]}
+    pronouns = {1: ["he", "him", "his"], 2: ["she", "her", "her"], 3: ["they", "them", "their"]}
     return pronouns[gender]
 
 
@@ -49,11 +49,33 @@ def get_land(pronoun: list) -> str:
     return choice(lands)
 
 
-def create_randomized_bio(name: str, gender: int) -> str:
-    personality = get_personality_type()
-    land = get_land(get_pronoun_list(gender))
+def get_extended_bio(pronoun: list, name: str) -> str:
+    ext_bio = [f"{name} has a stern neutral expression, but {pronoun[0]} couldn't hurt a fly.",
+               f"Once, masquerading under the guise of a merchant, {name} made a fortune from swindling the rich.",
+               f"Long ago, {name} lead a clandestine vigilante organization. "
+               f"{pronoun[0].title()} cannot afford to be found.",
+               f"Whispers on the wind tell of another with {name}'s face. These whispers are soon extinguished.",
+               f"As years pass and the seasons change, {name} stays the same."
+               f" There are none among the living who remember how this came to be.",
+               f"After angering a witch, {name} was placed under a curse which "
+               f"stole {pronoun[2]} ability to remember faces.",
+               f"The world would soon end; this, {name} believed. This, {pronoun[0]} knew with all {pronoun[2]} being.",
+               f"{name} can play almost any instrument perfectly, but is prone to breaking them.",
+               f"{name} is loved by animals, and loves animals in return.",
+               f"{name} didn't mean mean to end up here, but that's quite alright to {pronoun[1]}.",
+               f"'Here for a good time, not a long time' is {pronoun[2]} motto. "
+               f"{pronoun[2].title()} friends think {pronoun[0]} should get a better motto.",
+               f"'Get in the robot, {name}.' {name} still thinks about that day, and shutters."]
+    return choice(ext_bio)
 
-    bio = f"A{personality} {get_gender_type(gender)} from a land {land}."
+
+def create_randomized_bio(gender: int, name: str) -> str:
+    personality = get_personality_type()
+    pronoun = get_pronoun_list(gender)
+    land = get_land(pronoun)
+    ext_bio = get_extended_bio(pronoun, name)
+
+    bio = f"A{personality} {get_gender_type(gender)} from a land {land}.\n{ext_bio}"
     return bio
 
 
@@ -64,7 +86,7 @@ class CharacterInfo:
         name_choices = {1: get_male_name, 2: get_female_name, 3: choice([get_male_name, get_female_name])}
         self.name = name_choices[self.gender]()
 
-        self.bio = create_randomized_bio(self.name, self.gender)
+        self.bio = create_randomized_bio(self.gender, self.name)
 
         character_classes = [Warrior, Mage, Thief, Brawler, Priest, DarkKnight]
 
