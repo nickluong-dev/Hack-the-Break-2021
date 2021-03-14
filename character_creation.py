@@ -3,6 +3,7 @@ character
 """
 from random import randint, choice
 
+import user_controller
 
 def get_gender_type(gender: int) -> str:
     genders = {1: "man", 2: "woman", 3: "traveler"}
@@ -72,6 +73,8 @@ class Character:
 
 def main():
     new_character = Character()
+    user_controller.available_user_characters.append(new_character.name)
+    user_controller.available_user_characters.append(new_character.bio)
     return new_character.bio
 
 

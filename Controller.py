@@ -3,6 +3,7 @@ from discord.ext import commands
 import os
 from dotenv import load_dotenv
 import pymongo
+import user_controller
 from pymongo import MongoClient
 
 import character_creation
@@ -68,6 +69,7 @@ async def create(ctx):
     #      tell user that they already have a main character
     # else: do the stuff below
     new_character = character_creation.main()
+    user_controller.available_user_characters.append(new_character)
     em = discord.Embed(title="\U00002694 Create Character \U00002694",
                        description=f"User {ctx.message.author.mention} created a new character")
     em.add_field(name="Character Bio", value=f"{new_character}")
@@ -77,10 +79,24 @@ async def create(ctx):
 @bot.command(name='selectClass')
 async def select_class(ctx, chosen_class='none'):
     altered_chosen = chosen_class.title()
-    spec_list = ['Warrior', 'Mage', 'Thief', 'Priest']
-    if altered_chosen in spec_list:
-        # new_spec = character_classes.Player.
-        await ctx.send(f"good class: {altered_chosen} with specs: ")
+    print(altered_chosen)
+    spec_list = ['Warrior', 'Mage', 'Brawler', 'Priest', 'DarkKnight', 'Thief']
+    if len(user_controller.available_user_characters) > 3:
+        rem = discord.Embed(title="Error")
+        rem.add_field(name="Already have a character!", value="cant create right now")
+        await ctx.send(embed=rem)
+    elif altered_chosen in spec_list:
+        for i in range(0, len(spec_list)):
+            if spec_list[i] == altered_chosen:
+                user_controller.available_user_characters.append(user_controller.AVAILABLE_CLASSES[i]())
+                term = user_controller.available_user_characters[3]
+                word = character_classes.Player.get_class_stats(term)
+                em = discord.Embed(title="Class Spec")
+                em.add_field(name="\U0001F4D6 Character Profile \U0001F5E1\n", value=
+                f"Name: {user_controller.available_user_characters[0]}\n\n"
+                f"Backstory: {user_controller.available_user_characters[1]}\n\n")
+                em.add_field(name="\U0001F528 Profession Details", value=f"{word}")
+                await ctx.send(embed=em)
     else:
         await ctx.send(f"class does not exist: {chosen_class}")
 

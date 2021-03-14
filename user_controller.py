@@ -1,6 +1,9 @@
 import character_classes
 import random
+import Controller
 from discord.ext import commands
+
+available_user_characters = []
 AVAILABLE_CLASSES = [character_classes.Warrior,
                      character_classes.Mage,
                      character_classes.Brawler,
@@ -20,6 +23,3 @@ class user_controller(commands.Cog):
 
 def setup(bot):
     bot.add_cog(user_controller(bot))
-
-
-print(random.choice(AVAILABLE_CLASSES)().get_class_stats())
