@@ -18,21 +18,29 @@ def get_pronoun_list(gender: int) -> list:
 def get_personality_type() -> str:
     personalities = ["n energetic", " timid", " burly", "n easy-going", "n unreliable", "n unpleasant",
                      " mischievous", " happy-go-lucky", " cautious", " pragmatic", "n altruistic",
-                     "n unlucky", " lucky", " fearsome", "n unconfident", " confident"]
+                     "n unlucky", " lucky", " fearsome", "n unconfident", " confident", " troubled",
+                     " heavens-blessed", " secretive", " confrontational", " motivated", " sickly",
+                     " determined", " loud", " quiet", " voracious", " blind", " deaf", " perpetually-tired",
+                     " twice-cursed", " therian", "n elven", " dwarven", " shifty", "n eldritch", " void-sent",
+                     "n unthanked", "n unseen", " sinister", " wicked"]
     return choice(personalities)
 
 
 def get_male_name() -> str:
     names = ["Shinji", "Roger", "Eve", "Gary", "Terry", "Nick", "Sean", "Henry", "Aidan",
              "Tye", "Faris", "Vincent", "Jean", "Marty", "Volk", "Prince", "Alan",
-             "Lowen", "Mars", "Luther", "Lecter", "Leo", "Eugene", "Jack", "Alex"]
+             "Lowen", "Mars", "Luther", "Lecter", "Leo", "Eugene", "Jack", "Alex", "Vinny",
+             "Zane", "Zachary", "Dustin", "Paul", "John", "Dirk", "Jake", "Dave", "Manuel",
+             "Hanneman", "Raphael", "Claude", "Dimitri", "Davis", "Jim", "Dan", "Arthur"]
     return choice(names)
 
 
 def get_female_name() -> str:
     names = ["Asuka", "Rei", "Elly", "Catherine", "Ann", "Lily", "Aeleen", "Melany",
              "Alana", "Louise", "Noelle", "Mary", "Sophie", "Sophia", "Gabby", "Rebecca",
-             "Hanna", "Vanessa", "Illya", "Alex", "Veronica", "Soleil", "Eirika"]
+             "Hanna", "Vanessa", "Illya", "Alex", "Veronica", "Soleil", "Eirika", "Rose",
+             "Roxy", "Jade", "Jane", "Jessie", "Ruth", "Marianne", "Aysha", "Erin",
+             "Eve", "Eden", "Philia", "Yona", "Janelle", "Chloe", "Jaiden", "Wendy"]
     return choice(names)
 
 
@@ -49,7 +57,7 @@ def get_land(pronoun: list) -> str:
     return choice(lands)
 
 
-def get_extended_bio(pronoun: list, name: str) -> str:
+def get_extended_bio(pronoun: list, name: str, gender: int) -> str:
     ext_bio = [f"{name} has a stern neutral expression, but {pronoun[0]} couldn't hurt a fly.",
                f"Once, masquerading under the guise of a merchant, {name} made a fortune from swindling the rich.",
                f"Long ago, {name} lead a clandestine vigilante organization. "
@@ -67,7 +75,13 @@ def get_extended_bio(pronoun: list, name: str) -> str:
                f"{pronoun[2].title()} friends think {pronoun[0]} should get a better motto.",
                f"'Get in the robot, {name}.' {name} still thinks about that day, and shutters.",
                f"Yelling loudly is {pronoun[2]} greatest talent. 'It ain't easy,' {name} is quick to insist.",
-               f"{name} "]
+               f"Many regard {name} as a hero, but {pronoun[0]} insist{'s' if gender != 3 else ''} that {pronoun[0]} "
+               f"{'was' if gender != 3 else 'were'} simply at the right place at the right time.",
+               f"{name} once won a curry competition. {pronoun[0]} refuses to elaborate further.",
+               f"'There are many things to see in this world,' {name} commonly says, 'and I've seen them all.' "
+               f"{name} is not telling the truth.",
+               f"A goddess granted {name} the ability to see the fates of those around {pronoun[1]}. Whether this is"
+               f" a blessing or a curse remains to be seen."]
     return choice(ext_bio)
 
 
@@ -75,7 +89,7 @@ def create_randomized_bio(gender: int, name: str) -> str:
     personality = get_personality_type()
     pronoun = get_pronoun_list(gender)
     land = get_land(pronoun)
-    ext_bio = get_extended_bio(pronoun, name)
+    ext_bio = get_extended_bio(pronoun, name, gender)
 
     bio = f"A{personality} {get_gender_type(gender)} from a land {land}.\n{ext_bio}"
     return bio
