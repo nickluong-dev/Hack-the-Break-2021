@@ -67,7 +67,7 @@ def get_extended_bio(pronoun: list, name: str, gender: int) -> str:
                f" There are none among the living who remember how this came to be.",
                f"After angering a witch, {name} was placed under a curse which "
                f"stole {pronoun[2]} ability to remember faces.",
-               f"The world would soon end; this, {name} believed. This, {pronoun[0]} knew with all {pronoun[2]} being.",
+               f"The world would soon end; this, {name} believed. But that's fine, {name} also believed.",
                f"{name} can play almost any instrument perfectly, but is prone to breaking them.",
                f"{name} is loved by animals, and loves animals in return.",
                f"{name} didn't mean mean to end up here, but that's quite alright to {pronoun[1]}.",
