@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
+import pymongo
+from pymongo import MongoClient
+
 import character_creation
 from discord.ext.commands import CommandNotFound
 
@@ -11,11 +14,16 @@ startup_extensions = ["story"]
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+CONNECTION_URL = os.getenv('CONNECTION_URL')
 
 bot = commands.Bot(command_prefix='$')
 
 client = discord.Client()
 bot.remove_command("help")
+
+cluster = MongoClient(CONNECTION_URL)
+db = cluster["UserData"]
+collection = db["UserData"]
 
 
 @bot.event
@@ -28,7 +36,7 @@ async def on_ready():
 
 
 @bot.command()
-async def load(ctx, extension_name : str):
+async def load(ctx, extension_name: str):
     """Loads an extension."""
     try:
         bot.load_extension(extension_name)
@@ -39,7 +47,7 @@ async def load(ctx, extension_name : str):
 
 
 @bot.command()
-async def unload(ctx, extension_name : str):
+async def unload(ctx, extension_name: str):
     """Unloads an extension."""
     bot.unload_extension(extension_name)
     await ctx.send("{} unloaded.".format(extension_name))
@@ -122,6 +130,25 @@ async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         em = discord.Embed(title="\U00002620 Bad Command \U00002620", description="That's not a valid command, idiot.")
         await ctx.send(embed=em)
+
+
+@bot.event
+async def on_message(ctx):
+    my_query = {"_id": ctx.author.id}
+    if collection.count_documents(my_query) == 0:
+        if "python" in str(ctx.content.lower()):
+            post = {"_id": ctx.author.id, "Discord": ctx.author.name, "score": 1}
+            collection.insert_one(post)
+            await ctx.channel.send('accepted!')
+    else:
+        if "python" in str(ctx.content.lower()):
+            query = {"_id": ctx.author.id}
+            user = collection.find(query)
+            for result in user:
+                score = result["score"]
+            score = score + 1
+            collection.update_one({"_id": ctx.author.id}, {"$set": {"score": score}})
+            await ctx.channel.send('accepted!')
 
 
 if __name__ == "__main__":
