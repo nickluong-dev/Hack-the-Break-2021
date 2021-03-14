@@ -2,6 +2,7 @@
 character stuff
 """
 from random import randint, choice
+from character_classes import *
 
 
 def get_gender_type(gender: int) -> str:
@@ -15,9 +16,9 @@ def get_pronoun_list(gender: int) -> list:
 
 
 def get_personality_type() -> str:
-    personalities = ["energetic", "timid", "burly", "easy-going", "unreliable", "unpleasant",
-                     "mischievous", "happy-go-lucky", "cautious", "pragmatic", "altruistic",
-                     "unlucky", "lucky", "fearsome", "unconfident", "confident"]
+    personalities = ["n energetic", " timid", " burly", "n easy-going", "n unreliable", "n unpleasant",
+                     " mischievous", " happy-go-lucky", " cautious", " pragmatic", "n altruistic",
+                     "n unlucky", " lucky", " fearsome", "n unconfident", " confident"]
     return choice(personalities)
 
 
@@ -52,7 +53,7 @@ def create_randomized_bio(name: str, gender: int) -> str:
     personality = get_personality_type()
     land = get_land(get_pronoun_list(gender))
 
-    bio = f"{name} is a {personality} {get_gender_type(gender)},\nfrom a land {land}."
+    bio = f"A{personality} {get_gender_type(gender)} from a land {land}."
     return bio
 
 
@@ -63,11 +64,11 @@ class CharacterInfo:
         name_choices = {1: get_male_name, 2: get_female_name, 3: choice([get_male_name, get_female_name])}
         self.name = name_choices[self.gender]()
 
-        self.rarity = randint(1, 3)
-
         self.bio = create_randomized_bio(self.name, self.gender)
 
-        self.class_type = 0  # use the classes thing when it's ready
+        character_classes = [Warrior, Mage, Thief, Brawler, Priest, DarkKnight]
+
+        self.class_type = choice(character_classes)()
 
 
 def main():
