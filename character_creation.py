@@ -43,7 +43,8 @@ def get_land(pronoun: list) -> str:
              "with unending peace that blends the days together",
              "where Gaia's blessings have been bled dry",
              "where the breeze is calm and steady, but none are present to feel the wind",
-             f"{pronoun[0]} once ruled", f"which has exiled {pronoun[1]}"]
+             f"{pronoun[0]} once ruled", f"which has exiled {pronoun[1]}",
+             "devastated by the wrath of a god who went yet another year without sacrifice"]
     return choice(lands)
 
 
